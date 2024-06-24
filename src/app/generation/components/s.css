@@ -1,0 +1,7 @@
+h2{
+    @apply font-bold
+}
+
+.madiv{
+    @apply border my-10 p-5
+}
