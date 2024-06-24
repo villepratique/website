@@ -14,7 +14,7 @@ function AppInput({formik ,name,label, type,className,disabled,ourOnChange} : {f
       id={name}
              name={name}
                 onChange={(e)=> {
-                  ourOnChange(e)
+                  ourOnChange && ourOnChange(e)
                   formik.handleChange(e)
                 }}
                 onBlur={formik.handleBlur}

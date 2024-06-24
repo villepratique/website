@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { BdcModel } from './myDoc';
 
 const isTesting = process.env.NODE_ENV =="development"
-const getDefaultValue = (val : any) => isTesting ? val : "";
+const getDefaultValue = (val : any) => false ? val : "";
 const initialValues : BdcModel = {
     // owner: null,
     // ownerName: '', 
