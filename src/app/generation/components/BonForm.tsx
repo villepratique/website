@@ -24,7 +24,7 @@ const BonForm = () => {
       //   pathname: '/dame/generation', // Chemin de la page destination
       //   query: JSON.stringify(values), // Les données à passer en tant que paramètres de requête
       // });
-      router.push("/dame/generation?bonvalues="+JSON.stringify(values))
+      router.push("/generation?bonvalues="+JSON.stringify(values))
       // router.push("" , values)
 
 
