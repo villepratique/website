@@ -2,6 +2,24 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, PDFViewer, Image } from '@react-pdf/renderer';
 import { CONDITIONS } from '../constants';
+import { Font } from "@react-pdf/renderer";
+
+// noelline.landry5@gmail.com
+// lafon.villepratique@gmail.com
+
+// villepratique.jlafon@gmail.com
+// villepratique
+
+// Font.register({
+//   family: 'Inter',
+//   src: '/Inter/ourfont.ttf'
+// });
+Font.register({
+  family: 'Roboto-Bold',
+  src: '/Roboto/Roboto-Bold.ttf',
+});
+
+
 function formatDate(date : Date) {
   return date.toLocaleDateString('fr-FR');
 }
@@ -12,6 +30,8 @@ const styles = StyleSheet.create({
   side : {
     display : "flex",
     flexDirection: 'row',
+    maxWidth : "70%",
+    margin : "0 auto"
   },
   firstbox : {
     width : "60%"
@@ -22,9 +42,11 @@ const styles = StyleSheet.create({
 
   },
   page: {
+   marginTop : 20,
    
     backgroundColor: 'white',
-    padding: 20,
+    padding:"20 0px",
+    // font-family: "Inter", sans-serif;
   },
   section: {
     marginTop : 10
@@ -35,7 +57,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     marginBottom: 20,
-    textAlign: 'center',
+    textDecoration :"underline",
+    fontFamily : "Roboto-Bold",
   },
   minlabel: {
     fontSize: 5,
@@ -56,8 +79,9 @@ const styles = StyleSheet.create({
   },
   titre: {
     fontSize: 8,
-    fontWeight: 'bold',
-    marginBottom : 4
+    marginBottom : 4,
+   
+
   },
   value: {
     fontSize: 6,
@@ -98,7 +122,7 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
   }}>
     <View style={{
       width :"100%",
-      height: 80,
+      height: "100%",
       backgroundColor : "white",
     padding : 10,
 
@@ -135,7 +159,7 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
 
     <View style={{
       width :"100%",
-      height: 80,
+      height: "100%",
       backgroundColor : "white",
       padding : 10,
       display : "flex",
@@ -166,7 +190,6 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
   <Document>
     <Page size="A4" style={styles.page}>
 
-
       <View style={styles.side}>
           <View style={styles.firstbox}>
       <Image style={{
@@ -176,7 +199,7 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
 
 
             <View style={styles.section}>
-              <Text style={styles.titre}>Informations Locataire d'espace:</Text>
+              <Text style={{...styles.titre,textTransform :"uppercase",marginTop: 20, fontFamily : "Roboto-Bold"}}>Informations Locataire d'espace:</Text>
 
               <View style={styles.row}>
                 <Text style={styles.label}>Société : </Text>
@@ -233,24 +256,24 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Tarif H.T: </Text>
-                <Text style={styles.value}>euros {data.priceHT}</Text>
+                <Text style={styles.value}>{data.priceHT} euros</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>TVA (20%): </Text>
-                <Text style={styles.value}>euros {data.tva}</Text>
+                <Text style={styles.value}>{data.priceHT!*0.2} euros</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.label}>Tarif T.T.C: </Text>
-                <Text style={styles.value}>euros {data.totalTTC}</Text>
+                <Text style={styles.value}>{data.priceHT!*0.2 + data.priceHT!} euros</Text>
               </View>
 
 
 
             </View>
 
-            <View style={styles.section}>
-              <Text style={styles.titre}>COMMENTAIRES</Text>
-                <Text style={{fontSize : 6}}>{data.observations}</Text>
+            <View style={{...styles.section,margin : "10px 0"}}>
+              <Text style={{...styles.titre, fontFamily : "Roboto-Bold"}}>COMMENTAIRES</Text>
+                <Text style={{fontSize : 6,marginTop : 10,}}>{data.observations}</Text>
             </View>
 
             <View style={styles.section}>
@@ -261,24 +284,25 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
               </View>
 
               {[
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-                {label : "1/2 écran 500 x 500" , value : "21 400 euros"},
-              ].map((v,i) => <View key={i} style={styles.row}>
+                {label : "1 écran 625 x 625" , value : "5500 euros"},
+                {label : "1/2 écran 500 x 500" , value : "4500 euros"},
+                {label : "1/4 écran 525 x 525" , value : "3250 euros"},
+                {label : "1/8 écran 350 x 350" , value : "2800 euros"},
+                {label : "Ville supplémentaire" , value : "1140 euros"},
+                {label : "Activité supplementaire" , value : "1140 euros"},
+                {label : "Montant annuel H.T (campagne)" , value : `  ${data.priceHT! * parseInt(data.nbDeployOrdered!)!} euros`},
+              ].map((v) => <View style={{...styles.row, width : 140,justifyContent :"space-between"}}>
                   <Text style={styles.minlabel}>{v.label} </Text>
-                  <Text style={styles.minvalue}>{v.value}</Text>
+                  <Text style={styles.minvalue}> <span className='w-2'></span> {v.value}</Text>
                 </View>)}
 
-                  <View style={styles.row}>
-                    <Text style={{...styles.minlabel,marginRight : 20}}>Nb de mises en ligne souscrites: </Text>
-                    {["3","6","9","12"].map((v,i) => {
-                      return  <View key={i} style={{...styles.row,margin:"0"}}> 
+                  <View style={{...styles.row,marginBottom : 10}}>
+                    <Text style={{...styles.minlabel,marginRight : 0}}>Nb de mises en ligne souscrites: </Text>
+                    {["3","6","9","12"].map((v,index) => {
+                      return  <View style={{display : "flex",flexDirection : "row"}}> 
+                              <Text style={{...styles.minlabel,marginRight : 2}}> {v}</Text>
                                 <View style={{...styles.rond,backgroundColor: data.nbDeployOrdered == v ? "black" :"white"}}> 
-                              </View>
-                              <Text style={{...styles.minlabel,marginRight : 10}}>{v}</Text>
+                                </View>
 
                             </View>
                     })} 
@@ -287,7 +311,7 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
 
     <View style={{
       width : 180,
-      height: 50,
+      height: 20,
       backgroundColor: "green",
       color : "white",
       padding : "4px 30px",
@@ -306,21 +330,25 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
           </View>
 
           <View style={styles.secondbox}>
-        <Text style={styles.title}>Bon de Commande </Text>
-        <View style={{...styles.row}}>
+        <Text style={{...styles.title,marginTop : 40}}>Bon de Commande </Text>
+        <View style={{...styles.row,marginBottom : 10}}>
           <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4}}>N° - 1</Text>
-          <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4,marginLeft : 10}}>{formatDate(new Date())}</Text>
+          <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4,marginLeft : 10,}}>{formatDate(new Date())}</Text>
 
-        </View>
+        </View> 
 
-            <Text style={{color : "red",fontSize : 8,fontWeight : "bold"}}>Campagne non reconductible</Text>
-            <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4,}}>CONDITIONS GÉNÉRALES DE LOCATION POUR MISE EN LIGNE.</Text>
-            <Text style={{fontSize : 5,lineHeight : 1.5}} >{CONDITIONS}</Text>
+            {data.nonReductibleCommand == "Oui" && <Text style={{color : "red",fontSize : 12,fontWeight : "bold",marginBottom : 10,fontFamily : "Roboto-Bold"}}>Campagne non reconductible  </Text>}
+            <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4}}>CONDITIONS GÉNÉRALES DE LOCATION POUR MISE EN LIGNE.</Text>
+            <Text style={{fontSize : 4,lineHeight : 1.5,marginBottom : 10}} >{CONDITIONS}</Text>
+            
           </View>
 
       </View>
-
+      <View style={{maxWidth : "80%",margin : "0 auto"}}>
       {SignaturePart}
+      </View>
+     
+
       <View style={{
         textAlign :"center"
       }}>

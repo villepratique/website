@@ -24,7 +24,7 @@ const BonForm = () => {
       //   pathname: '/dame/generation', // Chemin de la page destination
       //   query: JSON.stringify(values), // Les données à passer en tant que paramètres de requête
       // });
-      router.push("/generation?bonvalues="+JSON.stringify(values))
+      router.push("/dame/generation?bonvalues="+JSON.stringify(values))
       // router.push("" , values)
 
 
@@ -41,8 +41,8 @@ const BonForm = () => {
       <div className='madiv'>
         <h2 className='text-xl'>Informations entête</h2>
         <AppSelect options={['Oui','Non']} label="Numérotation automatique" name="autoNumerotation" formik={formik} type={''} className={''} />
-        <AppInput label="Commande non reconductible" name="nonReductibleCommand" formik={formik} />
-        <AppInput label="Edition DOM/TOM" name="editionDomTom" formik={formik} />
+        <AppSelect options={['Oui', 'Non']} label="Commande non reconductible" name="nonReductibleCommand" formik={formik} type={''} className={''} />
+        <AppSelect options={['Oui', 'Non']} label="Edition DOM/TOM" name="editionDomTom" formik={formik} type={''} className={''} />
       </div>
       <div className="madiv">
         <h2 className='text-xl'>Informations client</h2>
@@ -70,10 +70,17 @@ const BonForm = () => {
         <AppInput label="Encart" name="encart" formik={formik} />
         <AppInput label="Localité / Ville" name="bdcLocality" formik={formik} />
         <AppInput label="Secteur d'activité" name="sector" formik={formik} />
-        <AppInput label="Montant H.T. (par mise en ligne)" name="priceHT" type="number" formik={formik} />
-        <AppInput label="TVA" name="tva" type="number" formik={formik} />
-        <AppInput label="Total T.T.C. (par mise en ligne)" name="totalTTC" type="number" formik={formik} />
-        <AppInput label="Total H.T. (de la campagne)" name="totalHT" type="number" formik={formik} />
+        <AppInput ourOnChange={(e : any) => {
+console.log(e.target.value) 
+            const v  = parseInt(e.target.value);
+
+            const tva = v*0.2
+            const montantTotal = tva + v
+            formik.setValues({...formik.values, tva : tva , totalTTC : montantTotal})
+        }} label="Montant H.T. (par mise en ligne)" name="priceHT" type="number" formik={formik} />
+        <AppInput disabled  label="TVA" name="tva" type="number" formik={formik} />
+        <AppInput disabled label="Total T.T.C. (par mise en ligne)" name="totalTTC" type="number" formik={formik} />
+        <AppInput disabled label="Total H.T. (de la campagne)" name="totalHT" type="number" formik={formik} />
         <AppInput label="Contact commercial" name="commercialContact" formik={formik} />
         <AppInput label="Observations" name="observations" formik={formik} />
       </div>

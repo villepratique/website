@@ -1,6 +1,6 @@
 import { Input } from "../input";
 
-function AppInput({formik ,name,label, type,className} : {formik : any ;name : string;label : string; type : string,className: string} ) {
+function AppInput({formik ,name,label, type,className,disabled,ourOnChange} : {formik : any ;name : string;label : string; type : string,className: string,disabled?:boolean,ourOnChange? : any} ) {
     return (
         <div className={className}>
       <label
@@ -10,9 +10,13 @@ function AppInput({formik ,name,label, type,className} : {formik : any ;name : s
         {label}
       </label>
       <Input
+      disabled={disabled}
       id={name}
              name={name}
-                onChange={formik.handleChange}
+                onChange={(e)=> {
+                  ourOnChange(e)
+                  formik.handleChange(e)
+                }}
                 onBlur={formik.handleBlur}
                 value={formik.values[name]}
                 type={type} 
