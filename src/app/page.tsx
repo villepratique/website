@@ -8,8 +8,8 @@ const Home = () => {
 
   return (
     <div className=''>
-        <div className='max-w-sm mx-auto '>
-            <h1 className='text-3xl'>Générer un Bon de Commande</h1>
+        <div className='max-w-lg mx-auto '>
+            <h1 className='text-3xl text-center mt-10'>Générer un Bon de Commande</h1>
             <BonDeCommandeForm  />
         </div>
     </div>

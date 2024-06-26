@@ -8,6 +8,7 @@ const initialValues : BdcModel = {
     // ownerName: '', 
     filename: '',
     date: null,
+    numero: "8808008",
     autoNumerotation: "Non",
     nonReductibleCommand:  "Non",
     editionDomTom:  "Non",

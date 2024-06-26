@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     fontSize: 6,
     marginLeft: 10,
     fontWeight : "bold",
-    borderBottomWidth : 0.4,
-    borderStyle : "dotted"
+    // borderBottomWidth : 0.4,
+    // borderStyle : "dotted",
   },
  
   row : {
@@ -332,7 +332,7 @@ const MyDocument = ({ data } : {data : BdcModel}) =>{
           <View style={styles.secondbox}>
         <Text style={{...styles.title,marginTop : 40}}>Bon de Commande </Text>
         <View style={{...styles.row,marginBottom : 10}}>
-          <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4}}>N° - 1</Text>
+          <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4}}>N° - {data.numero} </Text>
           <Text style={{fontSize : 8,fontWeight : "bold",marginTop : 4,marginLeft : 10,}}>{formatDate(new Date())}</Text>
 
         </View> 
@@ -369,6 +369,7 @@ export default MyDocument;
 export interface BdcModel {
     // owner: string | null;
     // ownerName: string;
+    numero:string;
     filename: string;
     date: string | null;
     autoNumerotation: string | null;

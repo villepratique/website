@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from "formik";
 import AppInput, { AppSelect } from '@/components/ui/Myself/AppInput';
 import { bonSchema, initialValues } from './logic';
@@ -8,6 +8,12 @@ import { useRouter } from 'next/navigation';
 
 
 const BonForm = () => {
+  useEffect(() => {
+    const r = sessionStorage.getItem("currentBon")
+    if(!r) return
+    formik.setValues(JSON.parse(r))
+  }, [])
+  
   const router = useRouter()
   const formik = useFormik({
     initialValues : initialValues,
@@ -24,6 +30,8 @@ const BonForm = () => {
       //   pathname: '/dame/generation', // Chemin de la page destination
       //   query: JSON.stringify(values), // Les données à passer en tant que paramètres de requête
       // });
+      sessionStorage.setItem("currentBon" ,JSON.stringify(values) )
+
       router.push("/generation?bonvalues="+JSON.stringify(values))
       // router.push("" , values)
 
@@ -40,6 +48,7 @@ const BonForm = () => {
 
       <div className='madiv'>
         <h2 className='text-xl'>Informations entête</h2>
+        <AppInput  label="Numéro du bon" name="numero" formik={formik} type={''} className={''} />
         <AppSelect options={['Oui','Non']} label="Numérotation automatique" name="autoNumerotation" formik={formik} type={''} className={''} />
         <AppSelect options={['Oui', 'Non']} label="Commande non reconductible" name="nonReductibleCommand" formik={formik} type={''} className={''} />
         <AppSelect options={['Oui', 'Non']} label="Edition DOM/TOM" name="editionDomTom" formik={formik} type={''} className={''} />
@@ -87,7 +96,7 @@ console.log(e.target.value)
 
       <div className="mt-6">
 
-        <h1>Formil {JSON.stringify(formik.errors)}</h1>
+        <h1>{JSON.stringify(formik.errors)}</h1>
         <button
           className="w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
           disabled={formik.isSubmitting}

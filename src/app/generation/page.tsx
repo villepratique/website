@@ -1,9 +1,18 @@
 "use client"
-import { PDFViewer } from '@react-pdf/renderer';
 import { useSearchParams } from 'next/navigation'
 import React, { Suspense } from 'react'
 import MyDocument from './components/myDoc';
+import dynamic from 'next/dynamic';
 
+// import { PDFViewer } from '@react-pdf/renderer';
+
+const PDFViewer = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  },
+);
 function Page() {
   return (
     <Suspense>
