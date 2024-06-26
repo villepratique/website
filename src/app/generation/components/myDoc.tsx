@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     // borderBottomWidth : 0.4,
     // borderStyle : "dotted",
   },
- 
   row : {
     display: "flex",
     flexDirection : "row",
